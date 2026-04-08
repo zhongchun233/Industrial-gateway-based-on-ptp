@@ -41,6 +41,14 @@ lower_computer\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
 lower_computer\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 lower_computer\main.o: ../Core/Inc/FreeRTOSConfig.h
+lower_computer\main.o: ..\Middlewares\SystemView\Sample\FreeRTOSV10\SEGGER_SYSVIEW_FreeRTOS.h
+lower_computer\main.o: ..\Middlewares\SystemView\SEGGER\SEGGER_SYSVIEW.h
+lower_computer\main.o: ..\Middlewares\SystemView\SEGGER\SEGGER.h
+lower_computer\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+lower_computer\main.o: ..\Middlewares\SystemView\Config\Global.h
+lower_computer\main.o: ..\Middlewares\SystemView\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+lower_computer\main.o: ..\Middlewares\SystemView\Config\SEGGER_SYSVIEW_Conf.h
+lower_computer\main.o: ..\Middlewares\SystemView\Config\SEGGER_RTT_Conf.h
 lower_computer\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 lower_computer\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 lower_computer\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
@@ -51,3 +59,4 @@ lower_computer\main.o: ../Core/Inc/eth.h
 lower_computer\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 lower_computer\main.o: ../Core/Inc/usart.h
 lower_computer\main.o: ../Core/Inc/gpio.h
+lower_computer\main.o: ..\APP\Debug\Debug.h

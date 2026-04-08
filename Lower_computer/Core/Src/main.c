@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Debug.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,7 +98,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_ETH_Init();
   /* USER CODE BEGIN 2 */
-
+//	Debug_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

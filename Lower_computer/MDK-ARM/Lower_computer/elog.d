@@ -1,0 +1,9 @@
+lower_computer\elog.o: ..\Middlewares\easylogger\src\elog.c
+lower_computer\elog.o: ..\Middlewares\easylogger\inc\elog.h
+lower_computer\elog.o: ..\Middlewares\easylogger\inc\elog_cfg.h
+lower_computer\elog.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+lower_computer\elog.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+lower_computer\elog.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+lower_computer\elog.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+lower_computer\elog.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+lower_computer\elog.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

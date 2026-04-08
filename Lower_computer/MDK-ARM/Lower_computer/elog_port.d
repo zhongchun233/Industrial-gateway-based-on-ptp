@@ -1,0 +1,10 @@
+lower_computer\elog_port.o: ..\Middlewares\easylogger\port\elog_port.c
+lower_computer\elog_port.o: ..\Middlewares\easylogger\inc\elog.h
+lower_computer\elog_port.o: ..\Middlewares\easylogger\inc\elog_cfg.h
+lower_computer\elog_port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+lower_computer\elog_port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+lower_computer\elog_port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+lower_computer\elog_port.o: ..\Middlewares\SystemView\SEGGER\SEGGER_RTT.h
+lower_computer\elog_port.o: ..\Middlewares\SystemView\Config\SEGGER_RTT_Conf.h
+lower_computer\elog_port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+lower_computer\elog_port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

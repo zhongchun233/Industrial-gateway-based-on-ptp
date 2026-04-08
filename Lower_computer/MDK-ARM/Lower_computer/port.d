@@ -3,6 +3,14 @@ lower_computer\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRT
 lower_computer\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 lower_computer\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 lower_computer\port.o: ../Core/Inc/FreeRTOSConfig.h
+lower_computer\port.o: ..\Middlewares\SystemView\Sample\FreeRTOSV10\SEGGER_SYSVIEW_FreeRTOS.h
+lower_computer\port.o: ..\Middlewares\SystemView\SEGGER\SEGGER_SYSVIEW.h
+lower_computer\port.o: ..\Middlewares\SystemView\SEGGER\SEGGER.h
+lower_computer\port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+lower_computer\port.o: ..\Middlewares\SystemView\Config\Global.h
+lower_computer\port.o: ..\Middlewares\SystemView\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+lower_computer\port.o: ..\Middlewares\SystemView\Config\SEGGER_SYSVIEW_Conf.h
+lower_computer\port.o: ..\Middlewares\SystemView\Config\SEGGER_RTT_Conf.h
 lower_computer\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 lower_computer\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 lower_computer\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h

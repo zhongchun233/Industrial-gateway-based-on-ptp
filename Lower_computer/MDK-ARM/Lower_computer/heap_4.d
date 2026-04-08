@@ -5,6 +5,14 @@ lower_computer\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/Free
 lower_computer\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 lower_computer\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 lower_computer\heap_4.o: ../Core/Inc/FreeRTOSConfig.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\Sample\FreeRTOSV10\SEGGER_SYSVIEW_FreeRTOS.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\SEGGER\SEGGER_SYSVIEW.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\SEGGER\SEGGER.h
+lower_computer\heap_4.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\Config\Global.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\Config\SEGGER_SYSVIEW_Conf.h
+lower_computer\heap_4.o: ..\Middlewares\SystemView\Config\SEGGER_RTT_Conf.h
 lower_computer\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
 lower_computer\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
 lower_computer\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
