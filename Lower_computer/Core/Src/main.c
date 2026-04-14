@@ -26,7 +26,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Debug.h"
+#include "OLED_SHOW.h"
+#include "Delay.h"
+#include "DEBUG.h"
+#include "shell_port.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -60,7 +63,7 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint8_t usart3_rx;
 /* USER CODE END 0 */
 
 /**
@@ -98,7 +101,12 @@ int main(void)
   MX_USART3_UART_Init();
   MX_ETH_Init();
   /* USER CODE BEGIN 2 */
-//	Debug_Init();
+	DWT_Init(); 
+  Create_OLED_Task();
+	Create_DEBUG_Task();
+	
+//	HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
+	userShellInit();
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -143,17 +151,15 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSIState = RCC_HSI_DIV2;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 5;
   RCC_OscInitStruct.PLL.PLLN = 192;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
-  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLR = 4;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
@@ -182,6 +188,20 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+/* USER CODE BEGIN 4 */
+/* 中断回调函数 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    /* 判断是哪个串口触发的中断 */
+    if(huart ->Instance == USART1)
+    {
+        //调用shell处理数据的接口
+			  shellHandler(&shell, usart3_rx);
+        //使能串口中断接收
+			  HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
+    }
+}
+/* USER CODE END 4 */
 
 /* USER CODE END 4 */
 

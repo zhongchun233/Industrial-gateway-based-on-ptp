@@ -1,16 +1,41 @@
-#include "Debug.h"
-#include "elog.h"
-void Debug_Init(void)
+#include "DEBUG.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "stdio.h"    // 用于 sprintf
+
+// 任务句柄 (可选，用于在其他地方控制任务)
+TaskHandle_t xDEBUGTaskHandle = NULL;
+
+/**
+  * @brief  OLED 显示任务
+  * @param  pvParameters: 任务参数
+  */
+void DEBUG_Task(void *pvParameters)
 {
-	/* initialize EasyLogger */
-	elog_init();
-	/* set EasyLogger log format */
-	elog_set_fmt(ELOG_LVL_ASSERT, ELOG_FMT_ALL);
-	elog_set_fmt(ELOG_LVL_ERROR, ELOG_FMT_LVL | ELOG_FMT_TAG | ELOG_FMT_TIME);
-	elog_set_fmt(ELOG_LVL_WARN, ELOG_FMT_LVL | ELOG_FMT_TAG | ELOG_FMT_TIME);
-	elog_set_fmt(ELOG_LVL_INFO, ELOG_FMT_LVL | ELOG_FMT_TAG | ELOG_FMT_TIME);
-	elog_set_fmt(ELOG_LVL_DEBUG, ELOG_FMT_ALL & ~(ELOG_FMT_FUNC | ELOG_FMT_T_INFO | ELOG_FMT_P_INFO));
-	elog_set_fmt(ELOG_LVL_VERBOSE, ELOG_FMT_ALL & ~(ELOG_FMT_FUNC | ELOG_FMT_T_INFO | ELOG_FMT_P_INFO));
-	/* start EasyLogger */
-	elog_start();
+
+
+
+	for(;;)
+    {
+				HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
+        // --- 延时 ---
+        // 使用 FreeRTOS 的延时，释放 CPU 给其他任务
+        vTaskDelay(pdMS_TO_TICKS(200)); 
+    }
+}
+
+/**
+  * @brief  创建 OLED 任务
+  *      
+  */
+void Create_DEBUG_Task(void)
+{
+    xTaskCreate(
+        DEBUG_Task,            // 任务函数
+        "DEBUG_Task",          // 任务名称 (调试用)
+        256,                  // 堆栈大小 
+        NULL,                 // 任务参数
+        1,                    // 任务优先级
+        &xDEBUGTaskHandle      // 任务句柄
+    );
 }
