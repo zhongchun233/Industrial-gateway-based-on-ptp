@@ -27,9 +27,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "OLED_SHOW.h"
-#include "Delay.h"
 #include "DEBUG.h"
 #include "shell_port.h"
+#include "BEEP.h"
+#include "DWT_Delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,11 +103,13 @@ int main(void)
   MX_ETH_Init();
   /* USER CODE BEGIN 2 */
 	DWT_Init(); 
+	beep_init();
   Create_OLED_Task();
 	Create_DEBUG_Task();
 	
 //	HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
 	userShellInit();
+
   /* USER CODE END 2 */
 
   /* Init scheduler */

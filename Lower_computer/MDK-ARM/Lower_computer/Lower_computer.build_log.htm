@@ -27,16 +27,16 @@ Project File Date:  04/14/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Lower_computer'
-compiling shell_companion.c...
-compiling shell_cmd_list.c...
-compiling shell_ext.c...
-compiling shell.c...
-compiling main.c...
-compiling shell_port.c...
+compiling BEEP.c...
+..\BSP\BEEP\BEEP.c(29): warning:  #188-D: enumerated type mixed with another type
+  } beep_ctrl = {0};
+..\BSP\BEEP\BEEP.c(195): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\BEEP\BEEP.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=31496 RO-data=4344 RW-data=260 ZI-data=22548  
+Program Size: Code=38856 RO-data=4920 RW-data=264 ZI-data=22568  
 FromELF: creating hex file...
-"Lower_computer\Lower_computer.axf" - 0 Error(s), 0 Warning(s).
+"Lower_computer\Lower_computer.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -60,7 +60,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE@5.6.0
       Include file:  CMSIS/Core/Include/tz_context.h
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

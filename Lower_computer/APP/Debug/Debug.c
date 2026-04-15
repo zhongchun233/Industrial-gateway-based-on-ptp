@@ -20,7 +20,7 @@ void DEBUG_Task(void *pvParameters)
 				HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);
         // --- 延时 ---
         // 使用 FreeRTOS 的延时，释放 CPU 给其他任务
-        vTaskDelay(pdMS_TO_TICKS(200)); 
+        osDelay(pdMS_TO_TICKS(200)); 
     }
 }
 

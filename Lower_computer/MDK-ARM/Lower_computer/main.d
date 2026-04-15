@@ -52,8 +52,10 @@ lower_computer\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 lower_computer\main.o: ../Core/Inc/usart.h
 lower_computer\main.o: ../Core/Inc/gpio.h
 lower_computer\main.o: ../APP/OLED_SHOW/OLED_SHOW.h
-lower_computer\main.o: ../BSP/Delay/Delay.h
 lower_computer\main.o: ..\APP\DEBUG\DEBUG.h
 lower_computer\main.o: ..\APP\Letter_shell\demo\stm32-freertos\shell_port.h
 lower_computer\main.o: ..\APP\Letter_shell\src\shell.h
 lower_computer\main.o: ..\APP\Letter_shell\src\shell_cfg.h
+lower_computer\main.o: ..\BSP\BEEP\BEEP.h
+lower_computer\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+lower_computer\main.o: ..\BSP\DWT_Delay\DWT_Delay.h

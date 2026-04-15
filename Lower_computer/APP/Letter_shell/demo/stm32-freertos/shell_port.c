@@ -38,13 +38,12 @@ short userShellWrite(char *data, unsigned short len)
 
 short userShellRead(char *data, unsigned short len)
 {
-	  HAL_StatusTypeDef status = HAL_UART_Receive(&debugSerial, (uint8_t *)data, len, 200);
+	  HAL_StatusTypeDef status = HAL_UART_Receive(&debugSerial, (uint8_t *)data, len, 0XFFFF);
     if (status == HAL_OK) {
         return len;
-    } else if (status == HAL_TIMEOUT) {
+    } else{
         return 0;
     }
-    return 0;
 
 }
 /**
@@ -83,8 +82,8 @@ void userShellInit(void)
 
     shell.write = userShellWrite;
     shell.read = userShellRead;
-//    shell.lock = userShellLock;
-//    shell.unlock = userShellUnlock;
+    shell.lock = userShellLock;
+    shell.unlock = userShellUnlock;
     shellInit(&shell, shellBuffer, 512);
     if (xTaskCreate(shellTask, "shell", 256, &shell, 1, NULL) != pdPASS)
     {
