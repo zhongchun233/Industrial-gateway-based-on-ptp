@@ -167,7 +167,7 @@ void UsbTest(void)
 // USB Ö÷ÈÎÎñ
 void USB_Task(void *pvParameters)
 {
-	shellPrint(&shell, "\r\nUSB_Task start\r\n");
+	shellPrint(&shell, "\r\nU	SB_Task start\r\n");
     for(;;)
     {
 

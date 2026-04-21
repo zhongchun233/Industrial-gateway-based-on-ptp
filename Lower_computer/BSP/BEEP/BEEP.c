@@ -4,7 +4,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 // --- 乐谱定义 (单位 Hz) ---
-#define NOTE_C4  2320
+#define NOTE_C4  1320
 #define NOTE_D4  2940
 #define NOTE_E4  3300
 #define NOTE_F4  3490
@@ -75,9 +75,9 @@ void bsp_beep_init(void)
 
     HAL_GPIO_Init(PRJ_BEEP_PORT, &gpio);
     bsp_beep_off();
-    beep_play_tone(NOTE_C4, 150); // 150ms
-    beep_play_tone(NOTE_E4, 150);
-    beep_play_tone(NOTE_G4, 150);
+    beep_play_tone(NOTE_E4, 150); // 150ms
+    beep_play_tone(NOTE_C4, 150);
+    beep_play_tone(NOTE_C5, 150);
 		bsp_beep_off();
 //    beep_play_tone(NOTE_C5, 300); // 最后一个音长一点
 }
