@@ -38,3 +38,5 @@ lower_computer\stm32h7xx_hal_rcc_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32
 lower_computer\stm32h7xx_hal_rcc_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 lower_computer\stm32h7xx_hal_rcc_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\stm32h7xx_hal_rcc_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
+lower_computer\stm32h7xx_hal_rcc_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h
+lower_computer\stm32h7xx_hal_rcc_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h

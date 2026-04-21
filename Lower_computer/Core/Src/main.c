@@ -21,7 +21,9 @@
 #include "FreeRTOS.h"
 #include "cmsis_os2.h"
 #include "eth.h"
+#include "fatfs.h"
 #include "usart.h"
+#include "usb_host.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -31,6 +33,7 @@
 #include "shell_port.h"
 #include "BEEP.h"
 #include "DWT_Delay.h"
+#include "USB.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,6 +104,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART3_UART_Init();
   MX_ETH_Init();
+  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
 	DWT_Init(); 
 	beep_init();
@@ -109,6 +113,7 @@ int main(void)
 	
 //	HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
 	userShellInit();
+	Create_USB_Task();
 
   /* USER CODE END 2 */
 
@@ -147,7 +152,7 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
@@ -159,9 +164,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 5;
-  RCC_OscInitStruct.PLL.PLLN = 192;
+  RCC_OscInitStruct.PLL.PLLN = 48;
   RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 5;
   RCC_OscInitStruct.PLL.PLLR = 4;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -178,13 +183,13 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
-  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
+  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -192,20 +197,18 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 /* USER CODE BEGIN 4 */
-/* 中断回调函数 */
+/* 锟叫断回碉拷锟斤拷锟斤拷 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    /* 判断是哪个串口触发的中断 */
+    /* 锟叫讹拷锟斤拷锟侥革拷锟斤拷锟节达拷锟斤拷锟斤拷锟叫讹拷 */
     if(huart ->Instance == USART1)
     {
-        //调用shell处理数据的接口
+        //锟斤拷锟斤拷shell锟斤拷锟斤拷锟斤拷锟捷的接匡拷
 			  shellHandler(&shell, usart3_rx);
-        //使能串口中断接收
+        //使锟杰达拷锟斤拷锟叫断斤拷锟斤拷
 			  HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
     }
 }
-/* USER CODE END 4 */
-
 /* USER CODE END 4 */
 
  /* MPU Configuration */

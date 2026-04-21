@@ -40,9 +40,11 @@ lower_computer\beep.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
 lower_computer\beep.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 lower_computer\beep.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\beep.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
+lower_computer\beep.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h
+lower_computer\beep.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
 lower_computer\beep.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 lower_computer\beep.o: ../Drivers/CMSIS/RTOS2/Include/cmsis_os2.h
-lower_computer\beep.o: ..\BSP\DWT_Delay\DWT_Delay.h
+lower_computer\beep.o: ../BSP/DWT_Delay/DWT_Delay.h
 lower_computer\beep.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 lower_computer\beep.o: ../Core/Inc/FreeRTOSConfig.h
 lower_computer\beep.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

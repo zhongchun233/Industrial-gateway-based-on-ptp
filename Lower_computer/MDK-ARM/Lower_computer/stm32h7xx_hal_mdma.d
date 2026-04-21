@@ -38,3 +38,5 @@ lower_computer\stm32h7xx_hal_mdma.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7
 lower_computer\stm32h7xx_hal_mdma.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 lower_computer\stm32h7xx_hal_mdma.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\stm32h7xx_hal_mdma.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
+lower_computer\stm32h7xx_hal_mdma.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h
+lower_computer\stm32h7xx_hal_mdma.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h

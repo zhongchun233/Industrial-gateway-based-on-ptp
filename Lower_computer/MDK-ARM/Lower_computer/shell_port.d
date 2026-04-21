@@ -10,8 +10,8 @@ lower_computer\shell_port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable
 lower_computer\shell_port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 lower_computer\shell_port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 lower_computer\shell_port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-lower_computer\shell_port.o: ..\APP\Letter_shell\src\shell.h
-lower_computer\shell_port.o: ..\APP\Letter_shell\src\shell_cfg.h
+lower_computer\shell_port.o: ../APP/Letter_shell/src/shell.h
+lower_computer\shell_port.o: ../APP/Letter_shell/src/shell_cfg.h
 lower_computer\shell_port.o: ..\APP\Letter_shell\demo\stm32-freertos\shell_port.h
 lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32H7xx_hal.h
 lower_computer\shell_port.o: ../Core/Inc/stm32h7xx_hal_conf.h
@@ -50,6 +50,8 @@ lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_t
 lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
+lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h
+lower_computer\shell_port.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
 lower_computer\shell_port.o: ../Core/Inc/usart.h
 lower_computer\shell_port.o: ../Core/Inc/main.h
 lower_computer\shell_port.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

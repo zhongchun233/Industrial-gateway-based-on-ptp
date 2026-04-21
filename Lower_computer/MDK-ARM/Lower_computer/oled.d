@@ -40,6 +40,8 @@ lower_computer\oled.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
 lower_computer\oled.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 lower_computer\oled.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\oled.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
+lower_computer\oled.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h
+lower_computer\oled.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
 lower_computer\oled.o: ..\BSP\OLED\OLED_Data.h
 lower_computer\oled.o: ../BSP/SOFT_IIC/SOFT_IIC.h
 lower_computer\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

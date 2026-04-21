@@ -40,7 +40,9 @@ lower_computer\soft_iic.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim
 lower_computer\soft_iic.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 lower_computer\soft_iic.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 lower_computer\soft_iic.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
-lower_computer\soft_iic.o: ..\BSP\DWT_Delay\DWT_Delay.h
+lower_computer\soft_iic.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hcd.h
+lower_computer\soft_iic.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
+lower_computer\soft_iic.o: ../BSP/DWT_Delay/DWT_Delay.h
 lower_computer\soft_iic.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 lower_computer\soft_iic.o: ../Core/Inc/FreeRTOSConfig.h
 lower_computer\soft_iic.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
