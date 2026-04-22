@@ -85,17 +85,20 @@ enum
 static const char *shellText[] =
 {
 #if SHELL_SHOW_INFO == 1
-    [SHELL_TEXT_INFO] =
-        "\r\n"
-        " _         _   _                  _          _ _ \r\n"
-        "| |    ___| |_| |_ ___ _ __   ___| |__   ___| | |\r\n"
-        "| |   / _ \\ __| __/ _ \\ '__| / __| '_ \\ / _ \\ | |\r\n"
-        "| |__|  __/ |_| ||  __/ |    \\__ \\ | | |  __/ | |\r\n"
-        "|_____\\___|\\__|\\__\\___|_|    |___/_| |_|\\___|_|_|\r\n"
-        "\r\n"
-        "Build:       "__DATE__" "__TIME__"\r\n"
-        "Version:     "SHELL_VERSION"\r\n"
-        "Copyright:   (c) 2020 Letter\r\n",
+[SHELL_TEXT_INFO] =
+    "\r\n"
+    " ____  _     _   _ ____    ____      _    \r\n"
+    "/ ___|| |__ | |_/ |  _ \\  / ___|__ _| |__ \r\n"
+    "| |  _| '_ \\| __| | | | |/ /   / _` | '_ \\\r\n"
+    "| |_| | | | | |_| | |_| / /___| (_| | |_) |\r\n"
+    " \\____|_| |_|\\__|_|____/ \\____|\\__,_|_.__/ \r\n"
+    "\r\n"
+    "Project:  Industrial Gateway Based on PTP\r\n"
+    "Build:    "__DATE__" "__TIME__"\r\n"
+    "Version:  "SHELL_VERSION"\r\n"
+    "Author:   https://gitee.com/chengfeng26\r\n"
+    "System:   STM32 / FreeRTOS / FATFS / USB HOST\r\n"
+    "\r\n",
 #endif
     [SHELL_TEXT_CMD_TOO_LONG] = 
         "\r\nWarning: Command is too long\r\n",
@@ -108,25 +111,25 @@ static const char *shellText[] =
     [SHELL_TEXT_KEY_LIST] =
         "\r\nKey List:\r\n",
     [SHELL_TEXT_CMD_NOT_FOUND] = 
-        "Command not Found\r\n",
+        "Command not found\r\n",
     [SHELL_TEXT_POINT_CANNOT_MODIFY] = 
-        "can't set pointer\r\n",
+        "Cannot set pointer\r\n",
     [SHELL_TEXT_VAR_READ_ONLY_CANNOT_MODIFY] = 
-        "can't set read only var\r\n",
+        "Cannot modify read-only var\r\n",
     [SHELL_TEXT_NOT_VAR] =
-        " is not a var\r\n",
+        " is not a variable\r\n",
     [SHELL_TEXT_VAR_NOT_FOUND] = 
-        "Var not Fount\r\n",
+        "Variable not found\r\n",
     [SHELL_TEXT_HELP_HEADER] =
-        "command help of ",
+        "Command help: ",
     [SHELL_TEXT_PASSWORD_HINT] = 
-        "Please input password:",
+        "Please input password:\r\n",
     [SHELL_TEXT_PASSWORD_ERROR] = 
-        "\r\npassword error\r\n",
+        "\r\nPassword error\r\n",
     [SHELL_TEXT_CLEAR_CONSOLE] = 
         "\033[2J\033[1H",
     [SHELL_TEXT_CLEAR_LINE] = 
-        "\033[2K\r",
+        "\033[2K\r\n",
     [SHELL_TEXT_TYPE_CMD] = 
         "CMD ",
     [SHELL_TEXT_TYPE_VAR] = 
@@ -142,7 +145,6 @@ static const char *shellText[] =
         "Parameter error\r\n",
 #endif
 };
-
 
 unsigned char pairedChars[][2] = {
     {'\"', '\"'},

@@ -34,6 +34,7 @@
 #include "BEEP.h"
 #include "DWT_Delay.h"
 #include "USB.h"
+#include "BSP_RTC.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,14 +108,17 @@ int main(void)
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
 	DWT_Init(); 
+	RTC_Init();
 	beep_init();
   Create_OLED_Task();
 	Create_DEBUG_Task();
+//	RTC_Set(2026,4,22,16,59,0);//写入RTC时间的操作RTC_Set(4位年,2位月,2位日,2位时,2位分,2位秒)
 	
 //	HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
 	userShellInit();
 	Create_USB_Task();
-
+	RTC_Get();
+	shellPrint(&shell,"DATA:%d,%d,%d,TIME:%d,%d,%d,week:%d,\r\n",ryear,rmon,rday,rhour,rmin,rsec,rweek);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -156,11 +160,17 @@ void SystemClock_Config(void)
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
+  /** Configure LSE Drive Capability
+  */
+  HAL_PWR_EnableBkUpAccess();
+  __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 5;
