@@ -25,9 +25,9 @@
 extern RTC_HandleTypeDef hrtc;
  
 //声明rtc.c文件中定义的全局变量（注意：这里不能给变量赋值）
-extern uint16_t ryear;
-extern uint8_t rmon,rday,rhour,rmin,rsec,rweek;
- 
+extern RTC_DateTypeDef NowDate;
+extern RTC_TimeTypeDef NowTime;
+
 void RTC_Init(void); //用户自建的带有上电BPK判断的RTC初始化【在主循环前调用】
 uint8_t Is_Leap_Year(uint16_t year);//判断是否是闰年函数
 uint8_t RTC_Get(void);//读出当前时间值【主函数中需要读RTC时调用】

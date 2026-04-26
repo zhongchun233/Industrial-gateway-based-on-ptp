@@ -8,9 +8,8 @@
 #include "BSP_RTC.h"
  
 //以下2行全局变量，用于RTC时间的读取与读入
-uint16_t ryear; //4位年
-uint8_t rmon,rday,rhour,rmin,rsec,rweek;//2位月日时分秒周
-
+RTC_DateTypeDef NowDate = {0};
+RTC_TimeTypeDef NowTime = {0};
 
 void RTC_Init(void) //用户自建的带有上电BPK判断的RTC初始化
 {
@@ -31,38 +30,32 @@ void RTC_Init(void) //用户自建的带有上电BPK判断的RTC初始化
   }
 }
  
-//判断是否是闰年函数
-//月份   1  2  3  4  5  6  7  8  9  10 11 12
-//闰年   31 29 31 30 31 30 31 31 30 31 30 31
-//非闰年 31 28 31 30 31 30 31 31 30 31 30 31
-//输入:年份
-//输出:该年份是不是闰年.1,是.0,不是
-uint8_t Is_Leap_Year(uint16_t year){
-	if(year%4==0){ //必须能被4整除
-		if(year%100==0){
-			if(year%400==0)return 1;//如果以00结尾,还要能被400整除
-			else return 0;
-		}else return 1;
-	}else return 0;
-}
-//设置时钟
-//把输入的时钟转换为秒钟
-//以1970年1月1日为基准
-//1970~2099年为合法年份
- 
-//月份数据表
-uint8_t const table_week[12]={0,3,3,6,1,4,6,2,5,0,3,5}; //月修正数据表
-const uint8_t mon_table[12]={31,28,31,30,31,30,31,31,30,31,30,31};//平年的月份日期表
+
  // 设置时间（H7 标准 HAL 库）
 uint8_t RTC_Set(uint16_t syear, uint8_t smon, uint8_t sday, uint8_t hour, uint8_t min, uint8_t sec)
 {
     RTC_DateTypeDef sDate = {0};
     RTC_TimeTypeDef sTime = {0};
 
+    uint8_t week = 0;		
+    int16_t y = syear;
+    uint8_t m = smon;
+    if (m == 1 || m == 2) {
+        m += 12;
+        y--;
+    }
+    // 计算结果：0=周日, 1=周一, 2=周二, 3=周三, 4=周四, 5=周五, 6=周六
+    week = (23 + 2 * m + 3 * (m + 1) / 5 + y + y / 4 - y / 100 + y / 400 + 1) % 7;
+
+    // HAL库通常定义：RTC_WEEKDAY_MONDAY=1 ... RTC_WEEKDAY_SUNDAY=7
+    // 我们需要把公式算出的 0(周日) 映射为 7，其他保持不变
+    if (week == 0) week = 7;
+
+		
     sDate.Year = syear - 2000;
     sDate.Month = smon;
     sDate.Date = sday;
-    sDate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
+    sDate.WeekDay = week;
 
     sTime.Hours = hour;
     sTime.Minutes = min;
@@ -88,21 +81,14 @@ uint8_t RTC_Get(void)
     HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
     HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 
-    ryear = 2000 + sDate.Year;
-    rmon = sDate.Month;
-    rday = sDate.Date;
-    rhour = sTime.Hours;
-    rmin = sTime.Minutes;
-    rsec = sTime.Seconds;
-    rweek = sDate.WeekDay;
+    NowDate.Year = sDate.Year;
+    NowDate.Month = sDate.Month;
+    NowDate.Date = sDate.Date;
+		NowDate.WeekDay = sDate.WeekDay;
+    NowTime.Hours = sTime.Hours;
+    NowTime.Minutes = sTime.Minutes;
+    NowTime.Seconds = sTime.Seconds;
+
 
     return 0;
-}
-
-// 计算星期（简化版）
-uint8_t RTC_Get_Week(uint16_t year, uint8_t month, uint8_t day)
-{
-    (void)year; (void)month; (void)day;
-    RTC_Get();
-    return rweek;
 }

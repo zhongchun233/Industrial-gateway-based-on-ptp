@@ -29,6 +29,8 @@
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\ST\\STM32_USB_Host_Library\\Class\\MSC\\Inc",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\APP\\USB",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\BSP\\RTC",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\BSP\\MODBUS",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\BSP\\W25Q128",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\MDK-ARM",

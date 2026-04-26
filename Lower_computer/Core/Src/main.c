@@ -35,6 +35,8 @@
 #include "DWT_Delay.h"
 #include "USB.h"
 #include "BSP_RTC.h"
+#include "quadspi.h"
+#include "w25q128.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,18 +109,23 @@ int main(void)
   MX_ETH_Init();
   MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
-	DWT_Init(); 
+	DWT_Init();
 	RTC_Init();
 	beep_init();
+	MX_QUADSPI_Init();   /* TODO: 在CubeMX中使能QUADSPI后，这行可删除（CubeMX会自动生成） */
+	W25Q128_Init();
+	CC936_Init();
   Create_OLED_Task();
 	Create_DEBUG_Task();
 //	RTC_Set(2026,4,22,16,59,0);//写入RTC时间的操作RTC_Set(4位年,2位月,2位日,2位时,2位分,2位秒)
 	
-//	HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
+	// HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
 	userShellInit();
 	Create_USB_Task();
 	RTC_Get();
-	shellPrint(&shell,"DATA:%d,%d,%d,TIME:%d,%d,%d,week:%d,\r\n",ryear,rmon,rday,rhour,rmin,rsec,rweek);
+	shellPrint(&shell,"DATA:%d,%d,%d,TIME:%d,%d,%d,week:%d,\r\n",
+						NowDate.Year+2000,NowDate.Month,NowDate.Date,NowTime.Hours,
+						NowTime.Minutes,NowTime.Seconds,NowDate.WeekDay);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -206,16 +213,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-/* USER CODE BEGIN 4 */
-/* �жϻص����� */
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    /* �ж����ĸ����ڴ������ж� */
-    if(huart ->Instance == USART1)
+
+    if(huart ->Instance == USART3)
     {
-        //����shell�������ݵĽӿ�
+
 			  shellHandler(&shell, usart3_rx);
-        //ʹ�ܴ����жϽ���
+
 			  HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
     }
 }

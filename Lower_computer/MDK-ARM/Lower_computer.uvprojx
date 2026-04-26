@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_PWR_LDO_SUPPLY,USE_HAL_DRIVER,STM32H743xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/RTOS2/Include;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../BSP/SOFT_IIC;../BSP/DWT_Delay;../BSP/OLED;../APP/OLED_SHOW;../APP/DEBUG;../APP/Letter_shell/src;../APP/Letter_shell/demo/stm32-freertos;../BSP/BEEP;../FATFS/Target;../FATFS/App;../USB_HOST/App;../USB_HOST/Target;../Middlewares/Third_Party/FatFs/src;../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../APP/USB;../BSP/RTC</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/RTOS2/Include;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../BSP/SOFT_IIC;../BSP/DWT_Delay;../BSP/OLED;../APP/OLED_SHOW;../APP/DEBUG;../APP/Letter_shell/src;../APP/Letter_shell/demo/stm32-freertos;../BSP/BEEP;../FATFS/Target;../FATFS/App;../USB_HOST/App;../USB_HOST/Target;../Middlewares/Third_Party/FatFs/src;../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../APP/USB;../BSP/RTC;..\BSP\MODBUS;..\BSP\W25Q128</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -933,6 +933,16 @@
               <FileName>RTC.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\RTC\RTC.c</FilePath>
+            </File>
+            <File>
+              <FileName>MODBUS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\MODBUS\MODBUS.c</FilePath>
+            </File>
+            <File>
+              <FileName>w25q128.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\W25Q128\w25q128.c</FilePath>
             </File>
           </Files>
         </Group>
