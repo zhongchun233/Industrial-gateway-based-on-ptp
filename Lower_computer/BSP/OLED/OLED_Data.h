@@ -27,11 +27,8 @@ typedef struct
 extern const uint8_t OLED_F8x16[][16];
 extern const uint8_t OLED_F6x8[][6];
 
-/*汉字字模数据声明 - 已移至外部 Flash，不再使用静态数组 */
-/* extern const ChineseCell_t OLED_CF16x16[]; */
-
-/*字库地址计算函数*/
-uint32_t OLED_GetFontOffset(uint8_t high, uint8_t low);
+/*汉字字模数据声明*/
+extern const ChineseCell_t OLED_CF16x16[];
 
 /*图像数据声明*/
 extern const uint8_t Diode[];
