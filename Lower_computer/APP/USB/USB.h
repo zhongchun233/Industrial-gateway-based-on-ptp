@@ -3,4 +3,5 @@
 
 #include "main.h"
 void Create_USB_Task(void);
+void USB_Log_Printf(const char *format, ...);
 #endif /* __EC_BSP_AHT21_DRIVER_H__ */

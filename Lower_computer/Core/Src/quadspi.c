@@ -1,97 +1,161 @@
+/* USER CODE BEGIN Header */
 /**
- * quadspi.c — W25Q128 QUADSPI 外设初始化
- *
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- *  TODO: 根据你的硬件原理图修改下面的 GPIO 引脚分配
- *
- *  STM32H743 常用 QUADSPI 引脚 (Bank1):
- *    CLK  → PB2  (AF9)  或  PF10 (AF9)
- *    NCS  → PB6  (AF10) 或  PG6  (AF10)
- *    IO0  → PC9  (AF9)  或  PD11 (AF9)  或 PF8 (AF10)
- *    IO1  → PC10 (AF9)  或  PD12 (AF9)  或 PF9 (AF10)
- *    IO2  → PE2  (AF9)  或  PF7  (AF9)
- *    IO3  → PA1  (AF9)  或  PD13 (AF9)  或 PF6 (AF9)
- *
- *  默认使用: PB2(CLK), PB6(NCS), PD11(IO0), PD12(IO1), PE2(IO2), PD13(IO3)
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- */
-
+  ******************************************************************************
+  * @file    quadspi.c
+  * @brief   This file provides code for the configuration
+  *          of the QUADSPI instances.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2026 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
 #include "quadspi.h"
+
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
 
 QSPI_HandleTypeDef hqspi;
 
-void HAL_QSPI_MspInit(QSPI_HandleTypeDef *hqspi_in)
-{
-    GPIO_InitTypeDef gpio = {0};
-
-    __HAL_RCC_QSPI_CLK_ENABLE();
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_GPIOD_CLK_ENABLE();
-    __HAL_RCC_GPIOE_CLK_ENABLE();
-
-    /* CLK: PB2 (AF9) */
-    gpio.Pin       = GPIO_PIN_2;
-    gpio.Mode      = GPIO_MODE_AF_PP;
-    gpio.Pull      = GPIO_NOPULL;
-    gpio.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-    gpio.Alternate = GPIO_AF9_QUADSPI;
-    HAL_GPIO_Init(GPIOB, &gpio);
-
-    /* NCS: PB6 (AF10) */
-    gpio.Pin       = GPIO_PIN_6;
-    gpio.Alternate = GPIO_AF10_QUADSPI;
-    HAL_GPIO_Init(GPIOB, &gpio);
-
-    /* IO0: PD11 (AF9) */
-    gpio.Pin       = GPIO_PIN_11;
-    gpio.Alternate = GPIO_AF9_QUADSPI;
-    HAL_GPIO_Init(GPIOD, &gpio);
-
-    /* IO1: PD12 (AF9) */
-    gpio.Pin       = GPIO_PIN_12;
-    gpio.Alternate = GPIO_AF9_QUADSPI;
-    HAL_GPIO_Init(GPIOD, &gpio);
-
-    /* IO2: PE2 (AF9) */
-    gpio.Pin       = GPIO_PIN_2;
-    gpio.Alternate = GPIO_AF9_QUADSPI;
-    HAL_GPIO_Init(GPIOE, &gpio);
-
-    /* IO3: PD13 (AF9) */
-    gpio.Pin       = GPIO_PIN_13;
-    gpio.Alternate = GPIO_AF9_QUADSPI;
-    HAL_GPIO_Init(GPIOD, &gpio);
-}
-
-void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef *hqspi_in)
-{
-    __HAL_RCC_QSPI_FORCE_RESET();
-    __HAL_RCC_QSPI_RELEASE_RESET();
-
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_2 | GPIO_PIN_6);
-    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13);
-    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2);
-}
-
+/* QUADSPI init function */
 void MX_QUADSPI_Init(void)
 {
-    hqspi.Instance = QUADSPI;
 
-    /*
-     * ClockPrescaler: QSPI_CLK = AHB3_CLK / (Prescaler + 1)
-     * STM32H743 典型: AHB3=240MHz, Prescaler=1 → QSPI=120MHz
-     * TODO: 根据你的时钟树调整
-     */
-    hqspi.Init.ClockPrescaler     = 1;
-    hqspi.Init.FifoThreshold      = 4;
-    hqspi.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
-    hqspi.Init.FlashSize           = 23;   /* 2^(23+1) = 16MB */
-    hqspi.Init.ChipSelectHighTime  = QSPI_CS_HIGH_TIME_2_CYCLE;
-    hqspi.Init.ClockMode           = QSPI_CLOCK_MODE_0;
-    hqspi.Init.FlashID             = QSPI_FLASH_ID_1;
-    hqspi.Init.DualFlash           = QSPI_DUALFLASH_DISABLE;
+  /* USER CODE BEGIN QUADSPI_Init 0 */
 
-    if (HAL_QSPI_Init(&hqspi) != HAL_OK) {
-        Error_Handler();
-    }
+  /* USER CODE END QUADSPI_Init 0 */
+
+  /* USER CODE BEGIN QUADSPI_Init 1 */
+
+  /* USER CODE END QUADSPI_Init 1 */
+  hqspi.Instance = QUADSPI;
+  hqspi.Init.ClockPrescaler = 255;
+  hqspi.Init.FifoThreshold = 1;
+  hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
+  hqspi.Init.FlashSize = 1;
+  hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
+  hqspi.Init.ClockMode = QSPI_CLOCK_MODE_0;
+  hqspi.Init.FlashID = QSPI_FLASH_ID_1;
+  hqspi.Init.DualFlash = QSPI_DUALFLASH_DISABLE;
+  if (HAL_QSPI_Init(&hqspi) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN QUADSPI_Init 2 */
+
+  /* USER CODE END QUADSPI_Init 2 */
+
 }
+
+void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
+{
+
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  if(qspiHandle->Instance==QUADSPI)
+  {
+  /* USER CODE BEGIN QUADSPI_MspInit 0 */
+
+  /* USER CODE END QUADSPI_MspInit 0 */
+
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_QSPI;
+    PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_D1HCLK;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* QUADSPI clock enable */
+    __HAL_RCC_QSPI_CLK_ENABLE();
+
+    __HAL_RCC_GPIOE_CLK_ENABLE();
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    __HAL_RCC_GPIOG_CLK_ENABLE();
+    /**QUADSPI GPIO Configuration
+    PE2     ------> QUADSPI_BK1_IO2
+    PF6     ------> QUADSPI_BK1_IO3
+    PF8     ------> QUADSPI_BK1_IO0
+    PF9     ------> QUADSPI_BK1_IO1
+    PF10     ------> QUADSPI_CLK
+    PG6     ------> QUADSPI_BK1_NCS
+    */
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
+    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_10;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = GPIO_PIN_6;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
+    HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /* USER CODE BEGIN QUADSPI_MspInit 1 */
+
+  /* USER CODE END QUADSPI_MspInit 1 */
+  }
+}
+
+void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
+{
+
+  if(qspiHandle->Instance==QUADSPI)
+  {
+  /* USER CODE BEGIN QUADSPI_MspDeInit 0 */
+
+  /* USER CODE END QUADSPI_MspDeInit 0 */
+    /* Peripheral clock disable */
+    __HAL_RCC_QSPI_CLK_DISABLE();
+
+    /**QUADSPI GPIO Configuration
+    PE2     ------> QUADSPI_BK1_IO2
+    PF6     ------> QUADSPI_BK1_IO3
+    PF8     ------> QUADSPI_BK1_IO0
+    PF9     ------> QUADSPI_BK1_IO1
+    PF10     ------> QUADSPI_CLK
+    PG6     ------> QUADSPI_BK1_NCS
+    */
+    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2);
+
+    HAL_GPIO_DeInit(GPIOF, GPIO_PIN_6|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10);
+
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_6);
+
+  /* USER CODE BEGIN QUADSPI_MspDeInit 1 */
+
+  /* USER CODE END QUADSPI_MspDeInit 1 */
+  }
+}
+
+/* USER CODE BEGIN 1 */
+
+/* USER CODE END 1 */
+

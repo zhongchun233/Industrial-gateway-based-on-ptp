@@ -22,6 +22,8 @@
 #include "cmsis_os2.h"
 #include "eth.h"
 #include "fatfs.h"
+#include "quadspi.h"
+#include "rtc.h"
 #include "usart.h"
 #include "usb_host.h"
 #include "gpio.h"
@@ -71,6 +73,7 @@ void MX_FREERTOS_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint8_t usart3_rx;
+uint32_t RTC_ClockSource = RCC_RTCCLKSOURCE_LSE;
 /* USER CODE END 0 */
 
 /**
@@ -108,19 +111,22 @@ int main(void)
   MX_USART3_UART_Init();
   MX_ETH_Init();
   MX_FATFS_Init();
+  MX_RTC_Init();
+  MX_QUADSPI_Init();
   /* USER CODE BEGIN 2 */
 	DWT_Init();
-	RTC_Init();
+  userShellInit();
+	//RTC_Init();
 	beep_init();
-	MX_QUADSPI_Init();   /* TODO: 在CubeMX中使能QUADSPI后，这行可删除（CubeMX会自动生成） */
-	W25Q128_Init();
-	CC936_Init();
+	//MX_QUADSPI_Init();   /* TODO: 在CubeMX中使能QUADSPI后，这行可删除（CubeMX会自动生成） */
+	// W25Q128_Init();
+	// CC936_Init();
   Create_OLED_Task();
 	Create_DEBUG_Task();
 //	RTC_Set(2026,4,22,16,59,0);//写入RTC时间的操作RTC_Set(4位年,2位月,2位日,2位时,2位分,2位秒)
 	
 	// HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
-	userShellInit();
+
 	Create_USB_Task();
 	RTC_Get();
 	shellPrint(&shell,"DATA:%d,%d,%d,TIME:%d,%d,%d,week:%d,\r\n",
@@ -163,7 +169,7 @@ void SystemClock_Config(void)
 
   /** Configure the main internal regulator output voltage
   */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
@@ -181,9 +187,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 5;
-  RCC_OscInitStruct.PLL.PLLN = 48;
+  RCC_OscInitStruct.PLL.PLLN = 192;
   RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 5;
+  RCC_OscInitStruct.PLL.PLLQ = 15;
   RCC_OscInitStruct.PLL.PLLR = 4;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -200,13 +206,13 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_D3PCLK1|RCC_CLOCKTYPE_D1PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.SYSCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
-  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB3CLKDivider = RCC_APB3_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
+  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -220,7 +226,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     if(huart ->Instance == USART3)
     {
 
-			  shellHandler(&shell, usart3_rx);
+			  // shellHandler(&shell, usart3_rx);
 
 			  HAL_UART_Receive_IT(&debugSerial, (uint8_t*)&usart3_rx, 1);
     }
