@@ -17,5 +17,19 @@
 
 extern Shell shell;
 
+#define Debug 1
+
+#if Debug
+#define debugShellPrintf(shell, fmt, ...) shellPrint(shell, fmt, ##__VA_ARGS__)
+
+#else
+
+#define debugShellPrintf(Shell *shell, const char *fmt, ...)
+
+
+#endif
+
+
+
 void userShellInit(void);
 #endif

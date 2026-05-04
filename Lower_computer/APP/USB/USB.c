@@ -1,7 +1,7 @@
 #include "USB.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "stdio.h"    // 锟斤拷锟斤拷 sprintf
+#include "stdio.h"    
 #include "fatfs.h"
 #include "ff.h"
 #include "usb_host.h"
@@ -11,19 +11,38 @@
 #include "shell_ext.h"
 #include "cmsis_os.h"
 #include "BSP_RTC.h"
-#include "string.h"
-
+#include <string.h>
+#include <stdarg.h>   
 TaskHandle_t xUSBTaskHandle = NULL;
 extern ApplicationTypeDef Appli_state;
 extern RTC_DateTypeDef NowDate;
 extern RTC_TimeTypeDef NowTime;
 
+// 记录当前正在使用的日志日期，用来判断跨天
 
 
-static FIL logFile;
+static FIL logFile = {0}; // 日志文件对象
 static uint8_t usb_mounted = 0;
-static char log_buffer[512];
+static char log_buffer[512] = {0}; // 日志缓冲区
+static volatile uint8_t is_writing_log = 0; // 标志位，表示当前是否正在写入日志
 
+static uint8_t MSC_Log_Is_NEWDAY(void)
+{
+    static uint16_t cur_log_year = 0;
+    static uint8_t  cur_log_mon  = 0;
+    static uint8_t  cur_log_day  = 0;
+    if(cur_log_year != NowDate.Year + 2000 || cur_log_mon != NowDate.Month || cur_log_day != NowDate.Date)
+    {
+        cur_log_year = NowDate.Year + 2000;
+        cur_log_mon  = NowDate.Month;
+        cur_log_day  = NowDate.Date;
+
+        return 1;
+    }else
+    {
+        return 0;
+    }
+}
 /**
  * @brief USB大容量存储(MSC)应用程序主函数
  * 该函数负责初始化USB存储设备，创建日志文件并写入初始标记
@@ -32,12 +51,19 @@ static uint8_t MSC_Log_Start(void)
 {
     FRESULT res;                        // FAT文件系统操作结果
     uint32_t byteswritten;  //file write/read counts
+    char log_file_name[32] = {0}; // 日志文件名缓冲区
+
+
+    RTC_Get();
+    sprintf(log_file_name, "log_%04d%02d%02d.txt",
+            NowDate.Year + 2000, NowDate.Month, NowDate.Date);
+
     if(f_mount(&USBHFatFS,(const TCHAR*)USBHPath,1) !=FR_OK)
     {
         //Fatfs Initialization Error
         shellPrint(&shell," mount USB fail!!! \r\n");        
         Error_Handler();
-
+        usb_mounted = 0;
         return 0;
     }
     else
@@ -45,10 +71,10 @@ static uint8_t MSC_Log_Start(void)
         shellPrint(&shell," mount USB success!!! \r\n");
 
 
-        if(f_open(&logFile, "log.txt", FA_OPEN_ALWAYS | FA_WRITE) !=FR_OK)
+        if(f_open(&logFile, log_file_name, FA_OPEN_ALWAYS | FA_WRITE) !=FR_OK)
         {
             shellPrint(&shell," open log file fail!!! \r\n");
-
+            return 0;
         }
         else
         {
@@ -56,71 +82,63 @@ static uint8_t MSC_Log_Start(void)
 
             f_lseek(&logFile, f_size(&logFile));
 
-            char header[] = "\r\n========== Log Start ==========\r\n";
+            char header[64] = {0};
+            sprintf(header, "\r\n========== New Log Day : %04d-%02d-%02d ==========\r\n",
+            NowDate.Year+2000, NowDate.Month, NowDate.Date);
             f_write(&logFile, header, strlen(header), (void *)&byteswritten);
-
+            f_sync(&logFile);
         } 
+        usb_mounted = 1;
         return 1;
     }
 }
 
-/**
- * @brief 写入USB日志函数
- * 此函数用于将带有时间戳的日志信息写入USB存储设备
- */
-void USB_Log_Write(const char *fmt, ...)
-{
-    // 检查USB设备是否已挂载，若未挂载则直接返回
-    if(!usb_mounted)
-        return;
 
-    FRESULT res;           // FAT文件系统操作结果
-    uint32_t byteswritten; // 实际写入的字节数
-
-
-    // 获取当前RTC时间
-    RTC_Get();
-
-    // 将格式化的时间戳和日志计数器信息写入日志缓冲区
-    int len = snprintf(log_buffer, sizeof(log_buffer),
-                      "[%04d-%02d-%02d %02d:%02d:%02d]:\r\n",
-                      NowDate.Year + 2000, NowDate.Month, NowDate.Date,  // 年月日
-                      NowTime.Hours, NowTime.Minutes, NowTime.Seconds); 
-
-    // 将日志缓冲区内容写入文件
-    res = f_write(&logFile, log_buffer, len, (void *)&byteswritten);
-    // 检查写入结果，如果失败或写入字节数为0，则打印错误信息
-    if(res != FR_OK || byteswritten == 0)
-    {
-        shellPrint(&shell, "Log write failed!\r\n");
-    }else                                                                                          
-    {                                            
-        f_sync(&logFile);                                                                          
-    }   
-}
 
 void USB_Log_Printf(const char *format, ...)
 {
-    if(!usb_mounted)
+    if(is_writing_log)
         return;
+		if(MSC_Log_Is_NEWDAY())
+    {
+        // 跨天，关闭当前日志文件，创建新的日志文件
+        taskENTER_CRITICAL();
+        f_sync(&logFile);
+        f_close(&logFile);
+        taskEXIT_CRITICAL();
+        if(!MSC_Log_Start())
+        {
+            shellPrint(&shell,"Failed to create new log file for new day!!!\r\n");
+            return;
+        }
+    }
+    if(!usb_mounted || Appli_state == APPLICATION_DISCONNECT)
+        return;
+
+
+
+    is_writing_log = 1;
 
     va_list args;
     uint32_t byteswritten;
     FRESULT res;
-    int len;
 
     RTC_Get();
-    len = snprintf(log_buffer, sizeof(log_buffer),
+    snprintf(log_buffer, sizeof(log_buffer),
                       "[%04d-%02d-%02d %02d:%02d:%02d]",
-                      (int)NowDate.Year + 2000, (int)NowDate.Month, (int)NowDate.Date,  // 年月日
-                      (int)NowTime.Hours, (int)NowTime.Minutes, (int)NowTime.Seconds); 
+                      (int)NowDate.Year + 2000, 
+                      (int)NowDate.Month, 
+                      (int)NowDate.Date,  // 年月日
+                      (int)NowTime.Hours, 
+                      (int)NowTime.Minutes, 
+                      (int)NowTime.Seconds); 
     uint8_t time_len = strlen(log_buffer);
 
     va_start(args, format);                    
     int final_len = vsnprintf(log_buffer + time_len, 
                 sizeof(log_buffer) - time_len - 2, format, args);                                   
     va_end(args);
-
+    final_len += time_len;
     if(final_len > 0 && final_len < (int)sizeof(log_buffer) - 2)
     {
         if(log_buffer[final_len - 1] != '\n')
@@ -131,15 +149,24 @@ void USB_Log_Printf(const char *format, ...)
         }
     }
 
+
     res = f_write(&logFile, log_buffer, final_len, (void *)&byteswritten);
-    if(res != FR_OK || byteswritten == 0)
+    if(res == FR_OK && byteswritten != 0)
+    {
+        f_sync(&logFile);
+    }else
     {
         // f_sync(&logFile);
-        f_close(&logFile);
-        shellPrint(&shell,"USB MSC device is disconnected.\r\n");
-        f_mount(NULL, (const TCHAR*)"",0);
-        usb_mounted = 0;
+        taskENTER_CRITICAL();
+        {
+            f_close(&logFile);
+            f_mount(NULL, (const TCHAR*)"",0);
+            usb_mounted = 0;
+        }
+        taskEXIT_CRITICAL();       
+        shellPrint(&shell,"USB write error\r\n");
     }
+    is_writing_log = 0;
 
 }
 /**
@@ -150,23 +177,10 @@ void USB_Log_Printf(const char *format, ...)
 static void MSC_Log_Application(void)
 {
  
-    // 检查USB设备是否已挂载
-    if(!usb_mounted)
-    {
-        // 如果未挂载，尝试启动MSC日志功能
-        if(MSC_Log_Start())
-        {
-            // 如果启动成功，设置挂载标志为1
-            usb_mounted = 1;
-        }  
 
-    }
-    else
-    {
-        // 如果已挂载，执行USB日志写入
-        USB_Log_Printf("time:%d.\r\n", (int)NowTime.Seconds);
-        
-    }
+    // 如果已挂载，执行USB日志写入
+    USB_Log_Printf("time:%d.\r\n", (int)NowTime.Seconds);
+
     
 }
 static void MSC_Application(void)
@@ -184,10 +198,20 @@ static void MSC_Application(void)
         case APPLICATION_DISCONNECT:
             if(usb_mounted)
             {
-                f_close(&logFile);
+                uint8_t timeout  = 20;
+                while(is_writing_log && timeout--)
+                {
+                    vTaskDelay(1);
+                }
+                taskENTER_CRITICAL();
+                {
+                    f_sync(&logFile);
+                    f_close(&logFile);
+                    f_mount(NULL, (const TCHAR*)"",0);
+                    usb_mounted = 0;
+                }
+                taskEXIT_CRITICAL();
                 shellPrint(&shell,"USB MSC device is disconnected.\r\n");
-                f_mount(NULL, (const TCHAR*)"",0);
-                usb_mounted = 0;
             }
             break;
 

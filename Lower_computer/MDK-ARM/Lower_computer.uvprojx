@@ -277,7 +277,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x8000000</StartAddress>
-                <Size>0x200000</Size>
+                <Size>0x1f0000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_PWR_LDO_SUPPLY,USE_HAL_DRIVER,STM32H743xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/RTOS2/Include;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../BSP/SOFT_IIC;../BSP/DWT_Delay;../BSP/OLED;../APP/OLED_SHOW;../APP/DEBUG;../APP/Letter_shell/src;../APP/Letter_shell/demo/stm32-freertos;../BSP/BEEP;../FATFS/Target;../FATFS/App;../USB_HOST/App;../USB_HOST/Target;../Middlewares/Third_Party/FatFs/src;../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../APP/USB;../BSP/RTC;../BSP/MODBUS;../BSP/W25Q128</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc;../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/RTOS2/Include;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../BSP/SOFT_IIC;../BSP/DWT_Delay;../BSP/OLED;../APP/OLED_SHOW;../APP/DEBUG;../APP/Letter_shell/src;../APP/Letter_shell/demo/stm32-freertos;../BSP/BEEP;../FATFS/Target;../FATFS/App;../USB_HOST/App;../USB_HOST/Target;../Middlewares/Third_Party/FatFs/src;../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../APP/USB;../BSP/RTC;../BSP/MODBUS;../BSP/W25Q128;../BSP/FLASH;../BSP/MEMPOOL</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1111,6 +1111,21 @@
               <FileName>w25q128.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\W25Q128\w25q128.c</FilePath>
+            </File>
+            <File>
+              <FileName>FLASH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\FLASH\FLASH.c</FilePath>
+            </File>
+            <File>
+              <FileName>mempool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\MEMPOOL\mempool.c</FilePath>
+            </File>
+            <File>
+              <FileName>mempool_usage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\MEMPOOL\mempool_usage.c</FilePath>
             </File>
           </Files>
         </Group>

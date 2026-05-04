@@ -22,6 +22,7 @@
 #include "stm32h7xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "OLED_SHOW.h"
 #include "DEBUG.h"
 #include "shell_port.h"
@@ -70,16 +71,7 @@ extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN EV */
-__asm void my_HardFault_Handler(void)
-{
-    extern HardFault_Handler_C;
 
-    TST LR, #4    // if(lr[2]==1)
-    ITE EQ 
-    MRSEQ R0, MSP // lr[2] == 0, 
-    MRSNE R0, PSP // lr[2] == 1, 
-    B HardFault_Handler_C // 跳转到C函数
-}
 void HardFault_Handler_C(uint32_t *stack)
 {
   shellPrint(&shell, "HardFault_Handler_C is running\r\n");
@@ -163,7 +155,16 @@ void HardFault_Handler_C(uint32_t *stack)
   while(1);
 
 }
+__asm void HardFault_Handler(void)
+{
+    extern HardFault_Handler_C;
 
+    TST LR, #4    // if(lr[2]==1)
+    ITE EQ 
+    MRSEQ R0, MSP // lr[2] == 0, 
+    MRSNE R0, PSP // lr[2] == 1, 
+    B HardFault_Handler_C // 跳转到C函数
+}
 /* USER CODE END EV */
 
 /******************************************************************************/

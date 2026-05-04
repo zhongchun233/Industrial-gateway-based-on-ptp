@@ -7,10 +7,10 @@
 #include "stdarg.h"
 #include "shell_ext.h"
 
-
+#include <stdlib.h>
 #include "BSP_RTC.h"
-
-
+#include "FLASH.h"
+#include "mempool.h"
 /**
  * @brief 显示当前时间的命令处理函数
  * @param argc 命令参数个数
@@ -104,3 +104,67 @@ SHELL_EXPORT_CMD(
     settime, settimeCmd, set rtc time);
 
 
+void  HardFault_test_Cmd(int argc, char *argv[])
+{
+
+    // 打印系统启动后的tick数
+	shellPrint(shellGetCurrent(), "nowtick: %d\r\n",HAL_GetTick());
+
+    ((void(*)(void)) 0)(); // 故意执行空指针调用，触发HardFault异常
+	shellPrint(shellGetCurrent(),"已触发HardFault异常\r\n");
+}
+SHELL_EXPORT_CMD(
+SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN)|SHELL_CMD_DISABLE_RETURN,
+hardfault_test, HardFault_test_Cmd, test HardFault);
+
+void  printf_HardFault_log_Cmd(int argc, char *argv[])
+{
+    Fault_Log_t *fault_log;
+    uint8_t log_index = 0;
+    /* 从内存池分配缓冲区 */
+    fault_log = (Fault_Log_t *)MemPool_Alloc(MEMPOOL_TYPE_FLASH);
+    if(fault_log == NULL)
+    {
+    shellPrint(shellGetCurrent(),"MemPool_Alloc failed!!!\r\n");
+    return;
+    }
+    FLASH_ReadData(ADDR_FAULT_LOG, (uint8_t *)fault_log, sizeof(Fault_Log_t));
+
+    if(argc == 1)
+    {
+        log_index = atoi(argv[1]);    // 将字符串参数转换为整数
+        Fault_Record_t *record = &fault_log->records[log_index]; // 获取指定索引的记录
+        shellPrint(shellGetCurrent(),"Record %d: Time: %02d-%02d-%02d %02d:%02d:%02d, Code: 0x%04X, Level: %d\r\n",
+                log_index+1,
+                record->time.year+2000, record->time.month, record->time.day,
+                record->time.hour, record->time.minute, record->time.second,
+                record->fault_code, record->fault_level);
+        shellPrint(shellGetCurrent(),(char *)(record->fault_desc));
+        shellPrint(shellGetCurrent(), "Usage: printf_HardFault_log\r\n");
+        return;
+    }else 
+    {
+
+        if(fault_log->magic != 0xA5A5A5A5)
+        {
+            shellPrint(shellGetCurrent(),"No valid fault log found!!!\r\n");
+        }else
+        {
+            shellPrint(shellGetCurrent(),"Fault log loaded success!!!, record_count=%d\r\n", fault_log->record_count);
+            for(int i=0; i<fault_log->record_count && i<10; i++)
+            {
+                Fault_Record_t *record = &fault_log->records[i];
+                shellPrint(shellGetCurrent(),"Record %d: Time: %02d-%02d-%02d %02d:%02d:%02d, Code: 0x%04X, Level: %d,\r\n",
+                i+1,
+                record->time.year+2000, record->time.month, record->time.day,
+                record->time.hour, record->time.minute, record->time.second,
+                record->fault_code, record->fault_level);
+            }
+        }   
+
+    }
+    MemPool_Free(MEMPOOL_TYPE_FLASH, fault_log);
+}
+SHELL_EXPORT_CMD(
+SHELL_CMD_PERMISSION(0)|SHELL_CMD_TYPE(SHELL_TYPE_CMD_MAIN)|SHELL_CMD_DISABLE_RETURN,
+printf_HardFault_log,printf_HardFault_log_Cmd, read and printf HardFault log in flash);
