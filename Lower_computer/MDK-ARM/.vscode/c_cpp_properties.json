@@ -33,6 +33,11 @@
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\BSP\\W25Q128",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\BSP\\FLASH",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\BSP\\MEMPOOL",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\include",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\include\\compat",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\include\\netif",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\include\\lwip",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\user",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include",
                 "C:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\MDK-ARM",
@@ -44,7 +49,12 @@
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\APP\\Letter_shell\\user",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\Third_Party\\FatFs\\src\\option",
                 "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\ST\\STM32_USB_Host_Library\\Core\\Src",
-                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\ST\\STM32_USB_Host_Library\\Class\\MSC\\Src"
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\ST\\STM32_USB_Host_Library\\Class\\MSC\\Src",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\api",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\core",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\core\\ipv4",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\src\\netif",
+                "c:\\Users\\14434\\Desktop\\fireBBS\\Industrial-gateway-based-on-ptp\\Lower_computer\\Middlewares\\lwip-2.2.1\\user\\arch"
             ],
             "defines": [
                 "USE_PWR_LDO_SUPPLY",
