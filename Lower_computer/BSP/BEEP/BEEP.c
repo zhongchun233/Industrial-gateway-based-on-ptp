@@ -26,7 +26,7 @@ static struct {
     BeepMode mode;
     uint32_t tick;
     bool beeping;
-} beep_ctrl = {0};
+}beep_ctrl = {BEEP_OFF, 0, false};
 
 void bsp_beep_on(void)
 {

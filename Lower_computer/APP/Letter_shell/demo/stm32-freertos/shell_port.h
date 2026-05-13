@@ -20,7 +20,7 @@ extern Shell shell;
 #define Debug 1
 
 #if Debug
-#define debugShellPrintf(shell, fmt, ...) shellPrint(shell, fmt, ##__VA_ARGS__)
+#define debugShellPrintf(fmt, ...) shellPrint(&shell, fmt, ##__VA_ARGS__)
 
 #else
 

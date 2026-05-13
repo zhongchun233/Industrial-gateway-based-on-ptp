@@ -351,5 +351,13 @@ void OTG_FS_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef *hwwdg)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hwwdg);
 
+  /* NOTE: This function should not be modified, when the callback is needed,
+           the HAL_WWDG_EarlyWakeupCallback could be implemented in the user file
+   */
+}
 /* USER CODE END 1 */

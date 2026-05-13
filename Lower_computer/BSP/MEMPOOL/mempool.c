@@ -17,7 +17,7 @@ static uint8_t g_mempool_dma_data[MEMPOOL_DMA_SIZE * MEMPOOL_DMA_BLOCKS];
 
 /* ============ 内存池管理器 ============ */
 
-MemPool_Manager_t g_mempool_managers[MEMPOOL_TYPE_MAX] = {0};
+MemPool_Manager_t g_mempool_managers[MEMPOOL_TYPE_MAX] = {0U};
 
 /* ============ 内存池初始化 ============ */
 
@@ -214,18 +214,18 @@ void MemPool_ResetStats(MemPool_Type_t type) {
 /* ============ 调试信息 ============ */
 
 void MemPool_PrintDebugInfo(MemPool_Type_t type) {
-    if (type == MEMPOOL_TYPE_MAX) {
-        /* 打印所有 */
-        for (uint16_t i = 0; i < MEMPOOL_TYPE_MAX; i++) {
-            MemPool_Manager_t *mgr = &g_mempool_managers[i];
-            // printf("MemPool[%d]: Used=%d/%d, Peak=%d, Alloc=%d, Free=%d, Fail=%d\n",
-            //        i, mgr->used_count, mgr->block_count, mgr->peak_count,
-            //        mgr->alloc_count, mgr->free_count, mgr->fail_count);
-        }
-    } else if (type < MEMPOOL_TYPE_MAX) {
-        MemPool_Manager_t *mgr = &g_mempool_managers[type];
-        // printf("MemPool[%d]: Used=%d/%d, Peak=%d, Alloc=%d, Free=%d, Fail=%d\n",
-        //        type, mgr->used_count, mgr->block_count, mgr->peak_count,
-        //        mgr->alloc_count, mgr->free_count, mgr->fail_count);
-    }
+//    if (type == MEMPOOL_TYPE_MAX) {
+//        /* 打印所有 */
+//        for (uint16_t i = 0; i < MEMPOOL_TYPE_MAX; i++) {
+//            MemPool_Manager_t *mgr = &g_mempool_managers[i];
+//            // printf("MemPool[%d]: Used=%d/%d, Peak=%d, Alloc=%d, Free=%d, Fail=%d\n",
+//            //        i, mgr->used_count, mgr->block_count, mgr->peak_count,
+//            //        mgr->alloc_count, mgr->free_count, mgr->fail_count);
+//        }
+//    } else if (type < MEMPOOL_TYPE_MAX) {
+//        MemPool_Manager_t *mgr = &g_mempool_managers[type];
+//        // printf("MemPool[%d]: Used=%d/%d, Peak=%d, Alloc=%d, Free=%d, Fail=%d\n",
+//        //        type, mgr->used_count, mgr->block_count, mgr->peak_count,
+//        //        mgr->alloc_count, mgr->free_count, mgr->fail_count);
+//    }
 }

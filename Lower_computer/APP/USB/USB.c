@@ -49,7 +49,6 @@ static uint8_t MSC_Log_Is_NEWDAY(void)
  */
 static uint8_t MSC_Log_Start(void)
 {
-    FRESULT res;                        // FAT文件系统操作结果
     uint32_t byteswritten;  //file write/read counts
     char log_file_name[32] = {0}; // 日志文件名缓冲区
 

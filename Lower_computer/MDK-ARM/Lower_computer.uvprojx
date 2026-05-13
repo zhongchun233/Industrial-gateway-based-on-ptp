@@ -410,11 +410,6 @@
               <FilePath>../Core/Src/freertos.c</FilePath>
             </File>
             <File>
-              <FileName>eth.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/eth.c</FilePath>
-            </File>
-            <File>
               <FileName>quadspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/quadspi.c</FilePath>
@@ -545,6 +540,11 @@
               <FileName>stm32h7xx_hal_timebase_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32h7xx_hal_timebase_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>wwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Core\Src\wwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -997,6 +997,11 @@
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32h7xx_hal_wwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_wwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1123,9 +1128,14 @@
               <FilePath>..\BSP\MEMPOOL\mempool.c</FilePath>
             </File>
             <File>
-              <FileName>mempool_usage.c</FileName>
+              <FileName>Ethernetif.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\BSP\MEMPOOL\mempool_usage.c</FilePath>
+              <FilePath>..\BSP\Ethernet\Ethernetif.c</FilePath>
+            </File>
+            <File>
+              <FileName>APP_Ethernetif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Ethernet\APP_Ethernetif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2789,39 +2799,9 @@
           <GroupName>Middlewares/LwIP/netif</GroupName>
           <Files>
             <File>
-              <FileName>bridgeif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Middlewares\lwip-2.2.1\src\netif\bridgeif.c</FilePath>
-            </File>
-            <File>
-              <FileName>bridgeif_fdb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Middlewares\lwip-2.2.1\src\netif\bridgeif_fdb.c</FilePath>
-            </File>
-            <File>
               <FileName>ethernet.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Middlewares\lwip-2.2.1\src\netif\ethernet.c</FilePath>
-            </File>
-            <File>
-              <FileName>lowpan6.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Middlewares\lwip-2.2.1\src\netif\lowpan6.c</FilePath>
-            </File>
-            <File>
-              <FileName>lowpan6_ble.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Middlewares\lwip-2.2.1\src\netif\lowpan6_ble.c</FilePath>
-            </File>
-            <File>
-              <FileName>lowpan6_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Middlewares\lwip-2.2.1\src\netif\lowpan6_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>zepif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Middlewares\lwip-2.2.1\src\netif\zepif.c</FilePath>
             </File>
           </Files>
         </Group>

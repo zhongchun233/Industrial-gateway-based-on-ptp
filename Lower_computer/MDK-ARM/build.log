@@ -1,0 +1,14 @@
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'Lower_computer'
+Note: source file '..\BSP\RTC\RTC.c' - object file renamed from 'Lower_computer\RTC.o' to 'Lower_computer\rtc_1.o'.compiling Ethernetif.c...
+..\BSP\Ethernet\Ethernetif.c(310): warning:  #167-D: argument of type "void (*)(const void *)" is incompatible with parameter of type "osThreadFunc_t"
+      osThreadNew(ethernetif_input, netif, 
+ULL);// 创建以太网接收线�?,将netif结构体指针作为参�?
+..\BSP\Ethernet\Ethernetif.c(286): warning:  #177-D: variable "idx"  was declared but never referenced
+      uint32_t idx = 0;// 循环计数
+..\BSP\Ethernet\Ethernetif.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=67016 RO-data=181540 RW-data=320 ZI-data=71504  
+FromELF: creating hex file...
+"Lower_computer\Lower_computer.axf" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:06

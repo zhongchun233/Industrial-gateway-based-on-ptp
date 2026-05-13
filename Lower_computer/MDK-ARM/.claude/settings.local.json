@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E \"\\\\.\\(c|h\\)$\")"
+      "Bash(grep -E \"\\\\.\\(c|h\\)$\")",
+      "Bash(grep -n \"HAL_ETH_GetRxDataBuffer\\\\|HAL_ETH_GetRxDataLength\\\\|HAL_ETH_BuildRxDescriptors\\\\|HAL_ETH_DescAssignMemory\" /c/Users/14434/Desktop/fireBBS/Industrial-gateway-based-on-ptp/Lower_computer/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth.c)",
+      "Read(//c/Users/14434/Desktop/fireBBS/Industrial-gateway-based-on-ptp/Lower_computer/Drivers/STM32H7xx_HAL_Driver/Src/**)"
     ]
   }
 }

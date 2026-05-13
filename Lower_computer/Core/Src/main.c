@@ -20,7 +20,6 @@
 #include "main.h"
 #include "FreeRTOS.h"
 #include "cmsis_os2.h"
-#include "eth.h"
 #include "fatfs.h"
 #include "quadspi.h"
 #include "rtc.h"
@@ -111,7 +110,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART3_UART_Init();
-  MX_ETH_Init();
   MX_FATFS_Init();
   MX_RTC_Init();
   MX_QUADSPI_Init();
@@ -134,7 +132,7 @@ int main(void)
 	HAL_MPU_Disable();
   FLASH_Init();
 	RTC_Get();
-	debugShellPrintf(&shell,"DATA:%d,%d,%d,TIME:%d,%d,%d,week:%d,\r\n",
+	debugShellPrintf("DATA:%d,%d,%d,TIME:%d,%d,%d,week:%d,\r\n",
 						NowDate.Year+2000,NowDate.Month,NowDate.Date,NowTime.Hours,
 						NowTime.Minutes,NowTime.Seconds,NowDate.WeekDay);
   /* USER CODE END 2 */

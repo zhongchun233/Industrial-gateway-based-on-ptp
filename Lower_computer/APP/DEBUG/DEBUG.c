@@ -21,7 +21,7 @@ void DEBUG_Task(void *pvParameters)
 
         // --- 延时 ---
         // 使用 FreeRTOS 的延时，释放 CPU 给其他任务
-        osDelay(pdMS_TO_TICKS(500)); 
+        vTaskDelay(pdMS_TO_TICKS(500)); 
     }
 }
 
@@ -40,3 +40,4 @@ void Create_DEBUG_Task(void)
         &xDEBUGTaskHandle      // 任务句柄
     );
 }
+

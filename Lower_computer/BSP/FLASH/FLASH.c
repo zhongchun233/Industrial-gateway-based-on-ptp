@@ -130,7 +130,7 @@ uint8_t FLASH_AddFaultRecord(Fault_Record_t *record) {
     ret = FLASH_ReadFaultLog(log);
     if (ret != FLASH_OK) {// 读取失败（可能是第一次写入或数据损坏），初始化日志结构
         memcpy((uint8_t *)log, (void *)ADDR_FAULT_LOG, sizeof(Fault_Log_t));// 读取原始数据
-        debugShellPrintf(&shell, "FLASH_AddFaultRecord: failed to read fault log\r\n");
+        debugShellPrintf("FLASH_AddFaultRecord: failed to read fault log\r\n");
     }
 
     /* 环形缓冲：满了则删除最旧的 */
@@ -150,7 +150,7 @@ uint8_t FLASH_AddFaultRecord(Fault_Record_t *record) {
     ret = FLASH_EraseSector(ADDR_FAULT_LOG);
     if (ret != FLASH_OK) {
         MemPool_Free(MEMPOOL_TYPE_FLASH, log);
-        debugShellPrintf(&shell, "FLASH_AddFaultRecord: failed to erase sector\r\n");
+        debugShellPrintf("FLASH_AddFaultRecord: failed to erase sector\r\n");
         return ret;
     }
 
@@ -160,9 +160,9 @@ uint8_t FLASH_AddFaultRecord(Fault_Record_t *record) {
     /* 释放内存池 */
     MemPool_Free(MEMPOOL_TYPE_FLASH, log);
     if(ret != FLASH_OK) {
-        debugShellPrintf(&shell, "FLASH_AddFaultRecord: failed to write fault log\r\n");
+        debugShellPrintf("FLASH_AddFaultRecord: failed to write fault log\r\n");
     }else {
-        debugShellPrintf(&shell, "FLASH_AddFaultRecord: success\r\n");
+        debugShellPrintf("FLASH_AddFaultRecord: success\r\n");
     }
     return ret;
 }
@@ -218,25 +218,25 @@ void FLASH_Init(void) {
     /* 从内存池分配缓冲区 */
     fault_log = (Fault_Log_t *)MemPool_Alloc(MEMPOOL_TYPE_FLASH);
     if (fault_log == NULL) {
-        debugShellPrintf(&shell, "FLASH_Init: MemPool_Alloc failed\n\r");
+        debugShellPrintf("FLASH_Init: MemPool_Alloc failed\n\r");
         return;
     }
     FLASH_ReadData(ADDR_FAULT_LOG, (uint8_t *)fault_log, sizeof(Fault_Log_t));
     if (fault_log->magic != 0xA5A5A5A5) {
 //        FLASH_ClearFaultLog();
-			debugShellPrintf(&shell, "FLASH_Init: fault_log.magic is failed!!!\n\r");
+			debugShellPrintf("FLASH_Init: fault_log.magic is failed!!!\n\r");
 			if(FLASH_EraseSector(ADDR_FAULT_LOG) != HAL_OK)
 			{
-				debugShellPrintf(&shell, "FLASH_Init: Erase Sector is failed!!!\n\r");						
+				debugShellPrintf("FLASH_Init: Erase Sector is failed!!!\n\r");						
 			}else{
-				debugShellPrintf(&shell, "FLASH_Init: Erase Sector is success!!!\n\r");
+				debugShellPrintf("FLASH_Init: Erase Sector is success!!!\n\r");
 			}
 
     } else {
         if (FLASH_VerifyCRC32((uint8_t *)&fault_log->records, sizeof(fault_log->records), fault_log->crc32) != FLASH_OK) {
-            debugShellPrintf(&shell, "FLASH_Init: fault_log.crc32 is failed!!!\n\r");
+            debugShellPrintf("FLASH_Init: fault_log.crc32 is failed!!!\n\r");
         } else {
-            debugShellPrintf(&shell, "FLASH_Init: fault_log loaded success!!!, record_count=%d\n\r", fault_log->record_count);
+            debugShellPrintf("FLASH_Init: fault_log loaded success!!!, record_count=%d\n\r", fault_log->record_count);
         }
     }
 

@@ -34,7 +34,7 @@
 
 #include "lwip/opt.h"
 #include "lwip/arch.h"
-
+#include "cmsis_os.h"
 /** This is returned by _fromisr() sys functions to tell the outermost function
  * that a higher priority task was woken and the scheduler needs to be invoked.
  */

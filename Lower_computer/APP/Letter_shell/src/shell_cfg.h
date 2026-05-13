@@ -11,6 +11,7 @@
 
 #ifndef __SHELL_CFG_H__
 #define __SHELL_CFG_H__
+#include "main.h"  
 
 #ifdef SHELL_CFG_USER
 #include SHELL_CFG_USER
